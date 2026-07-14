@@ -1,0 +1,2 @@
+#!/bin/sh
+exec '/Users/fzrsahi/.nvm/versions/node/v20.19.5/bin/node' '/Users/fzrsahi/.nvm/versions/node/v20.19.5/lib/node_modules/oh-my-codex/dist/cli/omx.js' "$@"
