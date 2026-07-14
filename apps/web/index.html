@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FighType — Multiplayer Typing Battle Arena</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg-dark: #0f111a;
+        --bg-card: rgba(26, 32, 53, 0.75);
+        --accent-primary: #00ff88;
+        --accent-secondary: #ff0055;
+        --text-main: #f0f4f8;
+        --text-muted: #8899aa;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: 'Outfit', sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-main);
+        overflow-x: hidden;
+      }
+      code, pre, .mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .pixel-font {
+        font-family: 'Press Start 2P', cursive;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

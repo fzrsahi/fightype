@@ -1,0 +1,37 @@
+{
+  "name": "battle-typing-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "bun run --parallel --filter '@fightype/server' dev & bun run --filter '@fightype/web' dev",
+    "dev:server": "bun run --filter '@fightype/server' dev",
+    "dev:web": "bun run --filter '@fightype/web' dev",
+    "build:packages": "bun run --filter '@fightype/shared' build && bun run --filter '@fightype/game-engine' build",
+    "build:apps": "bun run --filter '@fightype/server' build && bun run --filter '@fightype/web' build",
+    "build": "bun run build:packages && bun run build:apps",
+    "lint": "oxlint .",
+    "db:migrate": "bun run --filter '@fightype/server' db:migrate",
+    "db:push": "bun run --filter '@fightype/server' db:push",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
+    "oxlint": "^0.15.0",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "node": ">=24.0.0",
+    "bun": ">=1.2.0"
+  },
+  "packageManager": "bun@1.2.0",
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "oxlint"
+    ]
+  }
+}

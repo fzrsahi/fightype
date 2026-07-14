@@ -9,6 +9,11 @@ To support both regional and global engineering collaboration, our documentation
 
 ---
 
+## Quick Start & Installation Reference
+For immediate instructions on installing prerequisites (`Node.js v24+`, `Bun v1.2+`), setting up environment variables, and running the local development servers (`bun run dev`), please refer to the main repository root guide: **[README.md](../README.md)**.
+
+---
+
 ## Document Index (`docs/id/` & `docs/en/`)
 
 | Order | Document Name | Indonesian (`Authoritative`) | English (`Placeholder`) | Core Focus / Description |

@@ -65,30 +65,89 @@ Before any production code is written, our **Project Constitution** enforces a s
 
 ---
 
-## Development Setup
+## Development & Installation Setup
 
-### Prerequisites
-- **Bun** `>= v1.1.0` (Standard runtime and workspace manager)
-- **PostgreSQL** `>= v15` (For room session history and persistence)
+### Prerequisites (`System Requirements`)
+FighType enforces strict runtime environments to ensure zero discrepancies between local development and CI/CD production pipelines:
+1. **Node.js (`v24+`):** Pinned precisely via [`@.nvmrc`](file:///Users/fzrsahi/Documents/Coding/battle-typing/.nvmrc).
+   ```bash
+   # If using nvm (Node Version Manager):
+   nvm install
+   nvm use
+   # Verifies Node v24.x is active
+   node -v
+   ```
+2. **Bun (`v1.2+`):** High-speed package manager and workspace runner.
+   ```bash
+   # Install or upgrade Bun if not already present:
+   curl -fsSL https://bun.sh/install | bash
+   bun --version
+   ```
+3. **PostgreSQL (`v15+`):** Required for Drizzle ORM room session history and persistence.
 
-### Getting Started (Scaffolding Phase)
+---
+
+### Step-by-Step Installation Guide
+
 ```bash
-# 1. Clone repository
-git clone https://github.com/your-org/battle-typing.git
-cd battle-typing
+# 1. Clone the repository and enter workspace root
+git clone https://github.com/fzrsahi/fightype.git
+cd fightype
 
-# 2. Install dependencies via Bun
+# 2. Activate Node v24 runtime per .nvmrc
+nvm use
+
+# 3. Install all monorepo workspace dependencies via Bun (~3 seconds)
 bun install
 
-# 3. Setup environment variables
+# 4. Setup environment variables for local backend
 cp apps/server/.env.example apps/server/.env
 
-# 4. Run database migrations via Drizzle ORM
-bun run db:migrate
+# 5. Build shared composite packages (@fightype/shared & @fightype/game-engine)
+bun run build:packages
+```
 
-# 5. Start development servers in parallel (Server on :3000, Web on :5173)
+---
+
+### Running the Application Locally (`Quick Start`)
+
+To start both the Fastify Backend (`apps/server`) and React + Vite Frontend (`apps/web`) simultaneously in parallel:
+```bash
 bun run dev
 ```
+
+Once running, access the local environments:
+- 🎮 **Game Client (React + Vite + Terraria 2D Canvas):** [http://localhost:5173](http://localhost:5173)
+- 🔌 **Server REST & WebSocket API:** [http://localhost:3000/api/v1/rooms](http://localhost:3000/api/v1/rooms)
+- 📖 **OpenAPI / Swagger Interactive Documentation:** [http://localhost:3000/docs](http://localhost:3000/docs)
+
+---
+
+## Available Monorepo Commands (`Scripts`)
+
+Run any of the following commands from the root directory using Bun:
+
+| Command | Description | Target Workspaces |
+| :--- | :--- | :--- |
+| `bun run dev` | Spins up both backend (`:3000`) and frontend (`:5173`) in parallel | `@fightype/server`, `@fightype/web` |
+| `bun run dev:server` | Starts only the Fastify backend with colorized `pino-pretty` dev logs | `@fightype/server` |
+| `bun run dev:web` | Starts only the React + Vite frontend with instant HMR | `@fightype/web` |
+| `bun run build:packages` | Compiles composite TypeScript references (`tsc -b`) | `@fightype/shared`, `@fightype/game-engine` |
+| `bun run build` | Full production bundle build across shared packages and applications | All Workspaces |
+| `bun run lint` | Runs ultra-fast Rust-powered **Oxlint** across 30+ files in `< 15ms` | All Workspaces |
+| `bun run db:migrate` | Executes Drizzle ORM database migrations against PostgreSQL | `@fightype/server` |
+| `bun run db:push` | Directly pushes Drizzle schema updates to local development database | `@fightype/server` |
+
+---
+
+## Core Engineering Standards & ADRs
+
+FighType enforces strict engineering guidelines documented in [`docs/id/05-adr.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/id/05-adr.md) and [`docs/id/11-coding-standards.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/id/11-coding-standards.md):
+
+1. **Framework-Idiomatic Architecture (`ADR-010`):** Pinned to **TypeScript `v7.0.2`**. Each workspace (`apps/server`, `apps/web`) maintains tailored `tsconfig.json` setups so code never fights against Fastify plugins or Vite `react-jsx` conventions.
+2. **Decentralized Error Handling (`ADR-009`):** All domain failures inherit from `DomainError` with encapsulated HTTP status codes (`statusCode`), unique error codes (`errorCode`), and **English-only (`English Only`)** user messages. Route handlers delegate `domainError.toResponse()` without manual string matching.
+3. **Structured Observability (`ADR-011`):** All server logs run via **Pino** (`apps/server/src/logger/index.ts`). In development (`NODE_ENV !== 'production'`), logs are colorized and formatted via `pino-pretty`. In production, logs output pure high-throughput async JSON.
+4. **Deterministic Functional Engine (`ADR-008`):** The game engine (`@fightype/game-engine`) is written as pure, zero-side-effect functions returning **`neverthrow` (`Result<T, E>`)** objects, guaranteeing sub-tick evaluation safety.
 
 ---
 

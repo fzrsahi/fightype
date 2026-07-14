@@ -231,3 +231,13 @@ Monorepo FighType menggunakan **Oxlint (`oxlint`)** sebagai tool linter resmi be
 - **Semicolons:** Wajib di akhir setiap statement (`semicolons: true`).
 - **Quotes:** Single quotes (`'string'`) untuk string TypeScript, Double quotes (`"string"`) untuk atribut JSX/React.
 - **Trailing Comma:** `all` (selalu tambahkan koma pada elemen terakhir array/object multibarut).
+
+---
+
+## 6. Runtime Node.js `v24` & Structured Logging (`Pino`)
+Sesuai **ADR-011**, eksekusi server dan monorepo mematuhi standar runtime dan observabilitas berikut:
+1. **Target Runtime:** Wajib sesuai spesifikasi `Node.js v24` yang tercantum di `.nvmrc` (`package.json` root mencantumkan `"engines": { "node": ">=24.0.0", "bun": ">=1.2.0" }`).
+2. **Pino Structured Logging:** Dilarang menggunakan `console.log()` / `console.error()` pada layanan backend (`apps/server`). Gunakan instance logger `pino` terpusat dari `apps/server/src/logger/index.ts` (`createLogger('ModuleName')`).
+3. **Pemisahan Mode Logging:**
+   - **Development (`isDev = true`):** Menggunakan transport `pino-pretty` untuk menghasilkan log berformat warna (*human-readable*) dengan stempel waktu terjemahan (`translateTime: 'HH:MM:ss Z'`). Level `debug`.
+   - **Production (`NODE_ENV = production`):** Menggunakan raw JSON stream murni dengan performa asinkronus ultra-tinggi untuk diproses oleh agregator log (tanpa `pino-pretty`). Level `info`.

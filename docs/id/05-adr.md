@@ -144,3 +144,19 @@
   - Memanfaatkan seluruh fitur pengetikan modern dari TypeScript 7.0.2 tanpa konflik modul antar-lingkungan (Node/Bun vs Browser/DOM).
   - Integrasi mulus dengan toolchain Vite, Fastify, dan linter Oxlint.
 
+---
+
+## ADR-011: Spesifikasi Runtime Node.js `v24` (`.nvmrc`) & Structured Logging dengan Pino (`Dev` vs `Prod`)
+- **Status:** Disetujui (*Accepted*)
+- **Konteks:**  
+  Konsistensi versi runtime sangat penting saat bekerja dalam tim atau CI/CD, dan aplikasi membutuhkan penanganan log yang cepat tanpa overhead di production namun tetap mudah dibaca (*human-readable*) di development.
+- **Keputusan:**  
+  1. **Runtime Target:** Menggunakan spesifikasi **Node.js `v24`** (`.nvmrc`) sebagai standar ekspektasi eksekusi lingkungan berbarengan dengan package manager **Bun**. `package.json` secara eksplisit mencantumkan `"engines": { "node": ">=24.0.0", "bun": ">=1.2.0" }`.
+  2. **Structured Logging (`Pino`):** Semua log server/backend wajib menggunakan library `pino` (`apps/server/src/logger/index.ts`).
+  3. **Pemisahan Mode Logging (`Dev vs Production`):**
+     - **Development (`NODE_ENV !== 'production'`):** Menggunakan `pino-pretty` transport dengan warna, stempel waktu yang mudah dibaca (`translateTime`), serta menyembunyikan field sistem teknis (`ignore: 'pid,hostname'`). Level default `debug`.
+     - **Production (`NODE_ENV === 'production'`):** Menonaktifkan transport pretty (`transport: undefined`) dan menghasilkan keluaran JSON murni yang ultra-cepat untuk dianalisis oleh tool agregator log (Elasticsearch, Datadog, CloudWatch). Level default `info`.
+- **Konsekuensi Positif:**
+  - Diagnostik lokal sangat nyaman bagi developer karena log berwarna dan terstruktur rapi.
+  - Performa production maksimal dengan asinkronus JSON logging tanpa bottleneck formatting.
+
