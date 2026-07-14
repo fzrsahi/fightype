@@ -33,6 +33,7 @@ For immediate instructions on installing prerequisites (`Node.js v24+`, `Bun v1.
 | **13** | Sprint Planning | [`13-sprint-planning.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/id/13-sprint-planning.md) | [`13-sprint-planning.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/en/13-sprint-planning.md) | Detailed sprint breakdowns (`Sprint 1` through `Sprint 6`) |
 | **14** | Testing Strategy | [`14-testing-strategy.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/id/14-testing-strategy.md) | [`14-testing-strategy.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/en/14-testing-strategy.md) | Automated testing philosophy (deprioritized for initial MVP delivery per ADR-006) |
 | **15** | Deployment Guide | [`15-deployment-guide.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/id/15-deployment-guide.md) | [`15-deployment-guide.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/en/15-deployment-guide.md) | Docker containerization, Bun/Fastify multi-stage builds, environment configuration |
+| **16** | Project Checkpoint & Progress Tracker | [`16-project-checkpoint.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/id/16-project-checkpoint.md) | [`16-project-checkpoint.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/id/16-project-checkpoint.md) | Living checkpoint tracker tracking completed (`[x]`) and pending (`[ ]`) tasks across all sprints |
 
 ---
 

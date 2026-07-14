@@ -25,6 +25,7 @@ Before any production code is written, our **Project Constitution** enforces a s
 
 - **Authoritative Specifications (Indonesian):** Maintained under [`docs/id/`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/id/01-vision.md)
 - **English Translations & Placeholders:** Maintained under [`docs/en/`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/en/01-vision.md)
+- **Live Checkpoint Tracker:** See [`docs/id/16-project-checkpoint.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/id/16-project-checkpoint.md)
 - **Full Index:** See [`docs/README.md`](file:///Users/fzrsahi/Documents/Coding/battle-typing/docs/README.md)
 
 ---
